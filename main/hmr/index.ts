@@ -18,7 +18,7 @@ interface HMRMessage {
     extname: string
 }
 
-new class {
+export default class {
     #changes: Map<string, number> = new Map();
 
     async #js(bundle: string, language: string) {
@@ -56,7 +56,7 @@ new class {
     }
 
     #subscribe = async () => {
-        const backend = await backends.get('@beyond-js/inspect');
+        const backend = await backends.get('@beyond-js/local');
         const socket: Socket = await backend.socket;
         socket.on('bundle/change', message =>
             this.#onchange(message).catch(exc => console.log(exc.stack)));

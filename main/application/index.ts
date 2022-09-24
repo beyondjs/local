@@ -2,8 +2,7 @@ import {backends} from '@beyond-js/backend/client';
 import {Events} from '@beyond-js/kernel/core';
 import type {Socket} from "socket.io-client";
 
-typeof process !== 'object' &&
-new class ApplicationStyles extends Events {
+export default class extends Events {
     /**
      * The application styles has changed, therefore it must be updated
      */
