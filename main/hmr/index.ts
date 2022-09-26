@@ -9,7 +9,6 @@ interface BImport {
 }
 
 declare const bimport: BImport;
-declare const breload: (resource: string, version?: number) => void;
 
 interface HMRMessage {
     bundle: string,
@@ -21,38 +20,35 @@ interface HMRMessage {
 export default class {
     #changes: Map<string, number> = new Map();
 
-    async #js(bundle: string, language: string) {
-        if (!bundles.has(bundle)) return;
-        const pkg = bundles.get(bundle).package(language !== '.' ? language : '');
+    async #js(vspecifier: string, language: string) {
+        if (!bundles.has(vspecifier)) return;
+        const pkg = bundles.get(vspecifier).package(language !== '.' ? language : '');
 
         const change = (() => {
-            !this.#changes.has(bundle) && this.#changes.set(bundle, 0);
-            const change = this.#changes.get(bundle);
-            this.#changes.set(bundle, change + 1);
+            !this.#changes.has(vspecifier) && this.#changes.set(vspecifier, 0);
+            const change = this.#changes.get(vspecifier);
+            this.#changes.set(vspecifier, change + 1);
             return change;
         })();
 
-        // Note: in AMD mode, the querystring is not allowed (it is used require.undef by the beyond.reload method)
-        const url = bimport.mode === 'amd' ? `${pkg.id}.hmr` : `${pkg.id}?hmr=${change}`;
-
         try {
-            await breload(url, change);
+            await bimport(`${pkg.vspecifier}?hmr=${change}`, change);
         } catch (exc) {
             console.log(`Error loading hmr of bundle "${pkg.bundle.id}"`, exc.stack);
         }
     }
 
-    async #css(bundle: string) {
+    async #css(vspecifier: string) {
         if (typeof location !== 'object') return;
 
         const {styles} = await bimport('@beyond-js/kernel/styles');
-        if (!styles.has(bundle)) return;
-        (styles.get(bundle)).change();
+        if (!styles.has(vspecifier)) return;
+        (styles.get(vspecifier)).change();
     }
 
-    async #onchange({bundle, language, extname}: HMRMessage) {
-        if (extname === '.js') return await this.#js(bundle, language);
-        if (extname === '.css') return await this.#css(bundle);
+    async #onchange({vspecifier, language, extname}: HMRMessage) {
+        if (extname === '.js') return await this.#js(vspecifier, language);
+        if (extname === '.css') return await this.#css(vspecifier);
     }
 
     #subscribe = async () => {
