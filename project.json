@@ -2,6 +2,12 @@
   "scope": "beyond-js",
   "name": "local",
   "version": "0.0.1",
+  "libraries": {
+    "imports": [
+      "@beyond-js/kernel",
+      "@beyond-js/backend"
+    ]
+  },
   "modules": {
     "path": "./"
   }
