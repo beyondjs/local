@@ -2,6 +2,8 @@ import {backends} from '@beyond-js/backend/client';
 import {Events} from '@beyond-js/kernel/core';
 import type {Socket} from "socket.io-client";
 
+declare const brequire: (specifier: string) => any;
+
 export default class extends Events {
     /**
      * The application styles has changed, therefore it must be updated
@@ -13,7 +15,7 @@ export default class extends Events {
             .setAttribute('href', `/${resource}.css?updated=${Date.now()}`);
 
         if (is === 'global') {
-            const {instances} = require('@beyond-js/kernel/bundle');
+            const {instances} = brequire('@beyond-js/kernel/bundle');
             if (instances.has('@beyond-js/widgets/render')) {
                 const {globalcss} = instances.get('@beyond-js/widgets/render').package().exports.values;
                 globalcss.update();
@@ -32,7 +34,7 @@ export default class extends Events {
 
     constructor() {
         super();
-        if (typeof process !== 'undefined') return;
+        if (typeof (<any>globalThis.process) !== 'undefined') return;
         this.#subscribe().catch(exc => console.error(exc.stack));
     }
 }

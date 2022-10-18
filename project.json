@@ -10,5 +10,25 @@
   },
   "modules": {
     "path": "./"
+  },
+  "deployment": {
+    "distributions": [
+      {
+        "name": "npm",
+        "maps": "external",
+        "ports": {
+          "bundles": 9110
+        },
+        "npm": {
+          "platforms": {
+            "web": "web",
+            "node": "node"
+          }
+        },
+        "ts": {
+          "compiler": "tsc"
+        }
+      }
+    ]
   }
 }

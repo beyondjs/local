@@ -11,7 +11,7 @@ interface BImport {
 declare const bimport: BImport;
 
 interface HMRMessage {
-    bundle: string,
+    vspecifier: string,
     distribution: number,
     language: string,
     extname: string
