@@ -18,6 +18,7 @@ interface HMRMessage {
 }
 
 export default class {
+    #devServer: number;
     #changes: Map<string, number> = new Map();
 
     async #js(vspecifier: string, language: string) {
@@ -32,7 +33,18 @@ export default class {
         })();
 
         try {
-            await bimport(`${pkg.vspecifier}?hmr=${change}`, change);
+            const resource = (() => {
+                if (!this.#devServer) return `${pkg.vspecifier}?hmr=${change}`;
+
+                const split = vspecifier.split('/');
+                split[0].startsWith('@') && split.shift(); // Remove the scope
+                split.shift(); // Remove the name of the package
+
+                const subpath = split.join('/');
+                return `http://localhost:${this.#devServer}/${subpath}.js?hmr=${change}`;
+            })();
+
+            await bimport(resource, change);
         } catch (exc) {
             console.log(`Error loading hmr of bundle "${pkg.bundle.id}"`, exc.stack);
         }
@@ -58,7 +70,9 @@ export default class {
             this.#onchange(message).catch(exc => console.log(exc.stack)));
     }
 
-    constructor() {
+    constructor(devServer: number) {
+        this.#devServer = devServer;
+
         this.#subscribe().catch(exc => console.error(exc.stack));
     }
 }
