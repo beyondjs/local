@@ -18,7 +18,7 @@ interface HMRMessage {
 }
 
 export default class {
-    #devServer: number;
+    readonly #devServer: number;
     #changes: Map<string, number> = new Map();
 
     async #js(vspecifier: string, language: string) {
