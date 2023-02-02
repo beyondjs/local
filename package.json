@@ -1,7 +1,54 @@
 {
+  "scope": "beyond-js",
+  "name": "local",
+  "version": "0.1.3",
+  "description": "The package enables HMR behavior in projects made with BeyondJS",
+  "libraries": {
+    "imports": [
+      "@beyond-js/kernel",
+      "@beyond-js/backend"
+    ]
+  },
+  "modules": {
+    "path": "./"
+  },
+  "deployment": {
+    "distributions": [
+      {
+        "name": "npm",
+        "maps": "external",
+        "npm": {
+          "platforms": {
+            "web": "web",
+            "node": "node"
+          }
+        }
+      },
+      {
+        "name": "web",
+        "platform": "web",
+        "ports": {
+          "bundles": 9123
+        },
+        "ts": {
+          "compiler": "tsc"
+        }
+      },
+      {
+        "name": "node",
+        "platform": "node",
+        "ports": {
+          "bundles": 9124
+        },
+        "ts": {
+          "compiler": "tsc"
+        }
+      }
+    ]
+  },
   "dependencies": {
     "socket.io-client": "^4.5.4",
-    "@beyond-js/kernel": "^0.1.7",
-    "@beyond-js/backend": "^0.1.1"
+    "@beyond-js/kernel": "~0.1.8",
+    "@beyond-js/backend": "~0.1.3"
   }
 }
