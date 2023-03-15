@@ -1,29 +1,19 @@
 {
-  "scope": "beyond-js",
-  "name": "local",
-  "version": "0.1.3",
+  "name": "@beyond-js/local",
+  "version": "0.1.4",
   "description": "The package enables HMR behavior in projects made with BeyondJS",
+  "license": "MIT",
+  "modules": {
+    "path": "./"
+  },
   "libraries": {
     "imports": [
       "@beyond-js/kernel",
       "@beyond-js/backend"
     ]
   },
-  "modules": {
-    "path": "./"
-  },
   "deployment": {
     "distributions": [
-      {
-        "name": "npm",
-        "maps": "external",
-        "npm": {
-          "platforms": {
-            "web": "web",
-            "node": "node"
-          }
-        }
-      },
       {
         "name": "web",
         "platform": "web",
