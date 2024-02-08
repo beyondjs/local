@@ -1,42 +1,42 @@
 {
-  "name": "@beyond-js/local",
-  "version": "0.1.4",
-  "description": "The package enables HMR behavior in projects made with BeyondJS",
-  "license": "MIT",
-  "modules": {
-    "path": "./"
-  },
-  "libraries": {
-    "imports": [
-      "@beyond-js/kernel",
-      "@beyond-js/backend"
-    ]
-  },
-  "deployment": {
-    "distributions": [
-      {
-        "name": "web",
-        "platform": "web",
-        "ports": {
-          "bundles": 9123
-        },
-        "ts": {
-          "compiler": "tsc"
-        }
-      },
-      {
-        "name": "node",
-        "platform": "node",
-        "ports": {
-          "bundles": 9124
-        },
-        "ts": {
-          "compiler": "tsc"
-        }
-      }
-    ]
-  },
-  "dependencies": {
-    "socket.io-client": "^4.5.4"
-  }
+	"name": "@beyond-js/local",
+	"version": "0.1.4",
+	"description": "The package enables HMR behavior in projects made with BeyondJS",
+	"license": "MIT",
+	"modules": {
+		"path": "./"
+	},
+	"libraries": {
+		"imports": [
+			"@beyond-js/kernel",
+			"@beyond-js/backend"
+		]
+	},
+	"deployment": {
+		"distributions": [
+			{
+				"name": "web",
+				"platform": "web",
+				"ports": {
+					"bundles": 9123
+				},
+				"ts": {
+					"compiler": "tsc"
+				}
+			},
+			{
+				"name": "node",
+				"platform": "node",
+				"ports": {
+					"bundles": 9124
+				},
+				"ts": {
+					"compiler": "tsc"
+				}
+			}
+		]
+	},
+	"dependencies": {
+		"socket.io-client": "^4.5.4"
+	}
 }
